@@ -1,0 +1,40 @@
+.hidden {
+  display: none;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+body {
+  background-color: #edf4ea;
+  margin: 3%;
+  font-size: 2vw;
+  font-family: "Quicksand", sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.5vw;
+}
+
+.visCon {
+  margin-top: 5%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.vis {
+  margin: 2%;
+}
+
+.tooltip {
+  padding: 3%;
+  border: none;
+}
+
+/*# sourceMappingURL=main.css.map */
