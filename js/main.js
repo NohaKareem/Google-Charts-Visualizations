@@ -13,17 +13,23 @@ function drawVisualization() {
 	ganttData.addColumn('string', 'Title');
 	ganttData.addColumn('date', 'Start Date');
 	ganttData.addColumn('date', 'End Date');
-	ganttData.addColumn('number', 'Duration');
-	ganttData.addColumn('number', 'Percent Complete');//~
+	ganttData.addColumn('number', 'Duration');//~
+	ganttData.addColumn('number', 'Percent Complete');
 	ganttData.addColumn('string', 'Dependencies');
 
 	ganttData.addRows([
-		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), daysToMills(7), 50, null],
-		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 50, null],
-		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 50, null],
-		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 50, null],
-		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 50, null],
-		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 50, null],
+		['6007.1', 'Read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), daysToMills(2), 100, null],
+		['5012.1', 'Sketch logo ideas', new Date(2020, 9, 23), new Date(2020, 9, 30), null, 100, null],
+		['6007.2', 'Write paper', new Date(2020, 9, 28), new Date(2020, 10, 5), daysToMills(3), 10, '6007.1'],
+		['GenEd.1', 'Write willpower challenge plan', new Date(2020, 9, 21), new Date(2020, 10, 3), null, 15, null],
+		['5010.1.0', 'Explore Google Charts API', new Date(2020, 9, 23), new Date(2020, 9, 27), null, 100, null],
+		['5010.1', 'Google Charts API', new Date(2020, 9, 26), new Date(2020, 10, 2), null, 65, '5010.1.0'],
+		['5012.2', 'Illustrate logo', new Date(2020, 10, 1), new Date(2020, 10, 8), null, 0, '5012.1'],
+		['5011.1', 'Explore Kepler.gl', new Date(2020, 9, 24), new Date(2020, 10, 1), null, 100, null],
+		['5011.2', 'Explore Kepler.gl using formatted data', new Date(2020, 10, 1), new Date(2020, 10, 8), null, 0, '5011.1'],
+		['5009.1', 'Setup Raspberry Pi', new Date(2020, 9, 21), new Date(2020, 9, 22), null, 100, null],
+		['5009.2', 'Setup Arduino + Johnny Five', new Date(2020, 9, 22), new Date(2020, 9, 29), null, 50, '5009.1'],
+		['5009.3', 'Connect P5.js', new Date(2020, 9, 29), new Date(2020, 10, 6), null, 50, '5009.2']
 	]);
 
 	var wrapper2 = new google.visualization.ChartWrapper({
@@ -32,7 +38,7 @@ function drawVisualization() {
 		options: { 
 			// animation: {"startup": true},
 			'title': 'Gantt Chart', 
-			'height': 80,
+			'height': 900,
 			// animation:{
 			//  "startup": true,
 			//   duration: 3000,
