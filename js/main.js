@@ -7,6 +7,7 @@ google.charts.load('current');
 google.charts.setOnLoadCallback(drawVisualization);
 
 function drawVisualization() {
+	// Gantt Chart
 	var ganttData = new google.visualization.DataTable();
 	ganttData.addColumn('string', 'Task Id');
 	ganttData.addColumn('string', 'Title');
@@ -17,16 +18,32 @@ function drawVisualization() {
 	ganttData.addColumn('string', 'Dependencies');
 
 	ganttData.addRows([
-		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 50, null]
+		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), daysToMills(7), 50, null],
+		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 50, null],
+		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 50, null],
+		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 50, null],
+		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 50, null],
+		['6007.1', 'read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 50, null],
 	]);
+
 	var wrapper2 = new google.visualization.ChartWrapper({
 		chartType: 'Gantt',
 		dataTable: ganttData,
-		options: { 'title': 'Gantt Chart', 'height': 200 }, 
-		containerId: 'visualization'//~
+		options: { 
+			// animation: {"startup": true},
+			'title': 'Gantt Chart', 
+			'height': 80,
+			// animation:{
+			//  "startup": true,
+			//   duration: 3000,
+			//   easing: 'out'
+			// }
+			}, 
+		containerId: 'ganttVis'//~
 	});
   	wrapper2.draw();
 	
+	// Sankey Diagram
 	let colors = [];//; = ['#89FC20', '#FF9FBF', '#01396B'];//#B934D4 #61ECFF
   
 	var sankeyData = new google.visualization.DataTable();
@@ -120,18 +137,19 @@ function drawVisualization() {
 				node: {
 					// interactivity: true,
 					nodePadding: 4,
+					// labelPadding: 10,
 					// fontName: 'Quicksand',
 					// width: 10,
 					colors: colors
 				}, 
 				link: {
 					colorMode: 'gradient',
-					colors: colors, 
+					colors: colors
 
 				}
 			} 
 		},
-		containerId: 'sankey'
+		containerId: 'sankeyVis'
 	});
 	sankeyWrapper.draw();
 }

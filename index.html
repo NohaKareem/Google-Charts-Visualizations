@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>Google Charts Dashboard</title>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width">
         <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
         <link href="css/reset.css" rel="stylesheet" type="text/css">
         <link href="css/main.css" rel="stylesheet" type="text/css">
@@ -14,10 +15,12 @@
             <h1>Google Charts Dashboard</h1>
         </header>
         <div class="visCon">
-            <div id="vis_div" class="vis"></div>
-            <div id="visualization" class="vis"></div>
             <h2>Weekly time snapshot</h2>
-            <div id="sankey" class="vis"></div>
+            <div id="ganttVis" class="vis"></div>
+
+            <h2>Weekly time snapshot</h2>
+            <p>A categorized snapshot into time a weekly timelog</p>
+            <div id="sankeyVis" class="vis"></div>
         </div>
         <script src="js/main.js"></script>
     </body>

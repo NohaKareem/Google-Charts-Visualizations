@@ -7,13 +7,14 @@
 }
 
 body {
-  background-color: #edf4ea;
+  background-color: #292829;
+  color: white;
   margin: 3%;
-  font-size: 2vw;
   font-family: "Quicksand", sans-serif;
 }
 
 h1 {
+  font-size: 2vw;
   text-align: center;
 }
 
@@ -21,10 +22,15 @@ h2 {
   font-size: 1.5vw;
 }
 
+p {
+  margin: 2.3%;
+}
+
 .visCon {
   margin-top: 5%;
+  padding: 5%;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   flex-direction: column;
 }
 
