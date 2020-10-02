@@ -3,7 +3,8 @@ function daysToMills(days) {
 	return days * 24 * 60 * 1000;
 }
 
-const LIGHT_BLUE = '#61ECFF';
+const LIGHT_BLUE = '#61ECFF', LIGHT_PINK = '#FF9FBF';
+const BACKGROUND_COLOR = '#292829';
 
 google.charts.load('current'); 
 google.charts.setOnLoadCallback(drawVisualization);
@@ -40,20 +41,50 @@ function drawVisualization() {
 		options: { 
 			// animation: {"startup": true},
 			'title': 'Gantt Chart', 
-			'height': 900,
+			'height': 570,
 
 			gantt: {
+				// arrows
 				arrow: {
 					angle: 125, 
 					width: 3, 
 					color: LIGHT_BLUE,
-					radius: 30
+					radius: 30, 
+					spaceAfter: 20
 				},
+				// backgroundColor: { fill: BACKGROUND_COLOR },//~
+				// percentStyle: { fill: '#ffffff'},
+				// palette colors https://stackoverflow.com/a/50367073/1446598
+				palette: [
+					{
+					  "color": LIGHT_BLUE,
+					  "dark": "#FFFFFF",
+					//   "light": "#eeeeFF"
+					}
+				  ],
+				barCornerRadius: 15,
+				labelStyle: {
+					fontName: 'Quicksand',
+					fontSize: 17,
+					// color: 'green'
+				  },
+				// critical path
 				criticalPathEnabled: true, 
 				criticalPathStyle: {
 					stroke: '#ff0055',
 					strokeWidth: 3.5
-				}
+				},
+				// sortTasks: true,
+
+				// // shadows
+				// shadowEnabled: true,
+				// shadowColor: '#FF0000',
+				// shadowOffset: 10,
+				
+				// grid tracks
+				innerGridTrack: { fill: BACKGROUND_COLOR },
+				// innerGridDarkTrack: { fill: 'white' },
+				innerGridHorizLine: { stroke: 'white' }
 			},
 			// animation:{
 			//  "startup": true,
@@ -144,7 +175,7 @@ function drawVisualization() {
 				colors.push('#89FC20');
 				break;
 			case ('Explore'):
-				colors.push('#FF9FBF');
+				colors.push(LIGHT_PINK);
 				break;
 		}
 	});
