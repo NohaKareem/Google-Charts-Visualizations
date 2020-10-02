@@ -3,6 +3,8 @@ function daysToMills(days) {
 	return days * 24 * 60 * 1000;
 }
 
+const LIGHT_BLUE = '#61ECFF';
+
 google.charts.load('current'); 
 google.charts.setOnLoadCallback(drawVisualization);
 
@@ -18,9 +20,9 @@ function drawVisualization() {
 	ganttData.addColumn('string', 'Dependencies');
 
 	ganttData.addRows([
-		['6007.1', 'Read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), daysToMills(2), 100, null],
+		['6007.1', 'Read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 100, null],
 		['5012.1', 'Sketch logo ideas', new Date(2020, 9, 23), new Date(2020, 9, 30), null, 100, null],
-		['6007.2', 'Write paper', new Date(2020, 9, 28), new Date(2020, 10, 5), daysToMills(3), 10, '6007.1'],
+		['6007.2', 'Write paper', new Date(2020, 9, 28), new Date(2020, 10, 5), null, 10, '6007.1'],
 		['GenEd.1', 'Write willpower challenge plan', new Date(2020, 9, 21), new Date(2020, 10, 3), null, 15, null],
 		['5010.1.0', 'Explore Google Charts API', new Date(2020, 9, 23), new Date(2020, 9, 27), null, 100, null],
 		['5010.1', 'Google Charts API', new Date(2020, 9, 26), new Date(2020, 10, 2), null, 65, '5010.1.0'],
@@ -39,6 +41,20 @@ function drawVisualization() {
 			// animation: {"startup": true},
 			'title': 'Gantt Chart', 
 			'height': 900,
+
+			gantt: {
+				arrow: {
+					angle: 125, 
+					width: 3, 
+					color: LIGHT_BLUE,
+					radius: 30
+				},
+				criticalPathEnabled: true, 
+				criticalPathStyle: {
+					stroke: '#ff0055',
+					strokeWidth: 3.5
+				}
+			},
 			// animation:{
 			//  "startup": true,
 			//   duration: 3000,
@@ -122,7 +138,7 @@ function drawVisualization() {
 							colors.push('#fce8b2');
 							break;
 					}
-				} else { colors.push('#61ECFF'); } //#01396B
+				} else { colors.push(LIGHT_BLUE); } //#01396B
 				break;
 			case ('Home'):
 				colors.push('#89FC20');
