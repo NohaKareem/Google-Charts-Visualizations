@@ -110,13 +110,14 @@ function renderGantt() {
 		chartType: 'Gantt',
 		dataTable: ganttData,
 		options: {
-			// animation: {"startup": true},
-			'title': 'Gantt Chart', 
-			// 'height': 570,
+			// animation: {
+			// 	duration: 5000, 
+			// 	easing: 'out'
+			// 	// "startup": true
+			// },
 
 			// dynamic height https://stackoverflow.com/a/41449314/1446598
-			'height': 95 + ganttData.getNumberOfRows() * trackHeight,
-			// backgroundColor: { fill: BACKGROUND_COLOR },//~
+			height: 95 + ganttData.getNumberOfRows() * trackHeight,
 			percentStyle: { fill: '#ff0fff'},
 			gantt: {
 				// arrows
@@ -149,23 +150,21 @@ function renderGantt() {
 					stroke: RED,
 					strokeWidth: 3.5
 				},
-				// sortTasks: true,
-
-				// // shadows
-				// shadowEnabled: true,
-				// shadowColor: '#FF0000',
-				// shadowOffset: 10,
+				// shadows
+				shadowEnabled: true,
+				shadowColor: '#FF0000',
+				shadowOffset: 5,
 				
 				// grid tracks
 				innerGridTrack: { fill: BACKGROUND_COLOR },
-				// innerGridDarkTrack: { fill: 'white' },
+				// innerGridDarkTrack: { fill: LIGHT_BLUE },
 				innerGridHorizLine: { stroke: 'white' }
 			},
-			// animation:{
-			//  "startup": true,
+			animation:{
+			 "startup": true
 			//   duration: 3000,
 			//   easing: 'out'
-			// }
+			}
 			}, 
 		containerId: 'ganttVis'
 	});
@@ -258,14 +257,13 @@ function renderSankey() {
 		dataTable: sankeyData,
 		options: { 
 			tooltip: { isHtml: true },
-			// height: 500,
+			height: 900,
 			sankey: {
 				// fontName: 'Quicksand',
 				node: {
 					// interactivity: true,
-					nodePadding: 4,
 					labelPadding: 10,
-					labelHheight: 10,
+					nodePadding: 40,
 					// fontName: 'Quicksand',
 					// width: 10,
 					colors: sankeyColors,
@@ -278,7 +276,6 @@ function renderSankey() {
 				link: {
 					colorMode: 'gradient',
 					colors: sankeyColors
-
 				}
 			} 
 		},
