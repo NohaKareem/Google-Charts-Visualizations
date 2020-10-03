@@ -11,6 +11,7 @@ google.charts.setOnLoadCallback(drawVisualization);
 let ganttData, ganttWrapper;
 let trackHeight = 40;
 let sankeyData, sankeyWrapper;
+// let dependencies = document.querySelector('#dependencies');
 
 function drawVisualization() {
 	// Gantt Chart
@@ -102,9 +103,7 @@ function populateGanttData() {
 		['5009.3', 'Connect P5.js', new Date(2020, 9, 29), new Date(2020, 10, 6), null, 50, '5009.2']
 	]);
 	
-	// let dependencies = document.querySelector('#dependencies');
-
-	// populate dependencies for input (fg holds ganttData rows) https://stackoverflow.com/a/6601129/1446598
+	// // populate dependencies for input (fg holds ganttData rows) https://stackoverflow.com/a/6601129/1446598
 	// ganttData.fg.forEach(node => {
 	// 	let currTaskId = node.c[0].v;
 	// 	let newSelectOption = document.createElement("option");
