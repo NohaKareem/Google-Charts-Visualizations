@@ -1,5 +1,6 @@
 $CHARCOAL_BLACK: #292829;
 $TRANSPARENT: rgba(255, 255, 255, 0);
+$RED: '#ff0055';
 
 .hidden {
 	display: none;
@@ -94,6 +95,28 @@ hr {
     border: none;
 }
 
-// #ganttVis {
-//   overflow-x: scroll;
-// }
+#ganttVis {
+  overflow-x: scroll;
+}
+
+// styling gantt chart https://matthewelsom.com/blog/styling-google-gantt-chart-with-css.html
+g:nth-child(10) {
+    rect {
+      stroke: white;
+      width: 35% !important;
+    }
+    text {
+        margin-right: 25px !important;
+        font-family: 'Quicksand' !important;
+    }
+
+    // tooltip header
+    text:nth-child(2) { 
+        font-weight: bold !important;
+    }
+
+    // critical path
+    text:nth-child(7) { 
+        font-weight: bold !important;
+    }
+  }

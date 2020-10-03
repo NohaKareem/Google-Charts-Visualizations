@@ -110,6 +110,7 @@ function renderGantt() {
 		chartType: 'Gantt',
 		dataTable: ganttData,
 		options: {
+			title: 'Tasks Gantt Chart',
 			// animation: {
 			// 	duration: 5000, 
 			// 	easing: 'out'
@@ -124,7 +125,7 @@ function renderGantt() {
 				arrow: {
 					angle: 125, 
 					width: 3, 
-					color: GREEN, //LIGHT_PINK,// LIGHT_BLUE,
+					color: GREEN,
 					radius: 30, 
 					spaceAfter: 20,	
 					trackHeight: trackHeight
@@ -133,9 +134,9 @@ function renderGantt() {
 				// palette colors https://stackoverflow.com/a/50367073/1446598
 				palette: [
 					{
-					  "color": "#FFF",//CHARCOAL_BLACK,// LIGHT_BLUE,
-					  "dark": GREEN//"#FFFFFF"
-					//   "light": "#FF0000"
+					  "color": "#FFF",
+					  "dark": GREEN,
+					  "light": LIGHT_BLUE // highlight color for other tasks on click
 					}
 				  ],
 				barCornerRadius: 15,
@@ -150,9 +151,10 @@ function renderGantt() {
 					stroke: RED,
 					strokeWidth: 3.5
 				},
+				
 				// shadows
 				shadowEnabled: true,
-				shadowColor: '#FF0000',
+				shadowColor: '#FFFFFF',
 				shadowOffset: 5,
 				
 				// grid tracks
@@ -262,10 +264,13 @@ function colorCodeSankey() {
 
 // render sankey diagram
 function renderSankey() {
-	sankeyWrapper = new google.visualization.ChartWrapper({
+	sankeyWrapper = new google.visualization.ChartWrapper(
+		
+		{
 		chartType: 'Sankey',
 		dataTable: sankeyData,
 		options: { 
+			title: 'Weekly time snapshot',
 			tooltip: { isHtml: true },
 			height: 900,
 			sankey: {
@@ -290,6 +295,66 @@ function renderSankey() {
 			} 
 		},
 		containerId: 'sankeyVis'
-	});
+	},
+	{
+		chartType: 'Gantt',
+		dataTable: ganttData,
+		options: {
+			// // animation not supported in Gantt
+			// animation: {
+			// "startup": true
+			// },
+
+			// dynamic height https://stackoverflow.com/a/41449314/1446598
+			height: 95 + ganttData.getNumberOfRows() * trackHeight,
+			percentStyle: { fill: '#ff0fff'},
+			gantt: {
+				// arrows
+				arrow: {
+					angle: 125, 
+					width: 3, 
+					color: GREEN, //LIGHT_PINK,// LIGHT_BLUE,
+					radius: 30, 
+					spaceAfter: 20,	
+					trackHeight: trackHeight
+				},
+
+				// palette colors https://stackoverflow.com/a/50367073/1446598
+				palette: [
+					{
+					  "color": "#FFF",//CHARCOAL_BLACK,// LIGHT_BLUE,
+					  "dark": GREEN//"#FFFFFF"
+					//   "light": "#FF0000"
+					}
+				  ],
+				barCornerRadius: 15,
+				labelStyle: {
+					fontName: 'Quicksand',
+					fontSize: LABEL_FONT_SIZE,
+				  },
+
+				// critical path
+				criticalPathEnabled: true, 
+				criticalPathStyle: {
+					stroke: RED,
+					strokeWidth: 3.5
+				},
+
+				// grid tracks
+				innerGridTrack: { fill: BACKGROUND_COLOR },
+				// innerGridDarkTrack: { fill: LIGHT_BLUE },
+				innerGridHorizLine: { stroke: 'white' },
+				
+				// // shadows
+				// shadowEnabled: true,
+				// shadowColor: 'white',
+				// shadowOffset: 5
+			}
+		}, 
+		containerId: 'ganttVis'
+	}
+	
+	
+	);
 	sankeyWrapper.draw();
 }

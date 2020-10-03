@@ -83,4 +83,23 @@ hr {
   border: none;
 }
 
+#ganttVis {
+  overflow-x: scroll;
+}
+
+g:nth-child(10) rect {
+  stroke: white;
+  width: 35% !important;
+}
+g:nth-child(10) text {
+  margin-right: 25px !important;
+  font-family: "Quicksand" !important;
+}
+g:nth-child(10) text:nth-child(2) {
+  font-weight: bold !important;
+}
+g:nth-child(10) text:nth-child(7) {
+  font-weight: bold !important;
+}
+
 /*# sourceMappingURL=main.css.map */
