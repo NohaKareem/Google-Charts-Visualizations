@@ -17,6 +17,30 @@
         <div class="visCon">
             <h2>Tasks Gantt Chart</h2>
             <div id="ganttVis" class="vis"></div>
+            <form action="#">
+                <input type="text" name="taskId" id="taskId" placeholder="task id" value="new task id">
+                <label for="taskId" class="hidden">task id</label>
+
+                <input type="text" name="taskTitle" id="taskTitle" placeholder="task title" value="new task title">
+                <label for="taskTitle" class="hidden">task title</label>
+
+                <input type="date" name="start" id="start" value="2020-10-02">
+                <label for="start" class="hidden">start</label>
+
+                <input type="date" name="end" id="end" value="2020-10-03">
+                <label for="end" class="hidden">end</label>
+
+                <input type="number" name="duration" id="duration" placeholder="duration" value="1">
+                <label for="duration" class="hidden">duration</label>
+
+                <input type="number" name="percentComplete" id="percentComplete" placeholder="percent complete" value="20">
+                <label for="percentComplete" class="hidden">percent complete</label>
+
+                <!-- <input type="text" placeholder="dependencies"> -->
+                <button id="addTask">add task</button>
+
+                <p class="hidden successMessage"></p>
+            </form>
 
             <h2>Weekly time snapshot</h2>
             <p>A categorized snapshot into time a weekly timelog</p>

@@ -1,3 +1,4 @@
+$CHARCOAL_BLACK: #292829;
 
 .hidden {
 	display: none;
@@ -8,8 +9,9 @@
 }
 
 body {
-    background-color: #292829;//#edf4ea;//#fddde7;
-    color: white; //~
+    background-color: #edf4ea;//;//#edf4ea;//#fddde7;
+    // color: white; //~
+    color: $CHARCOAL_BLACK;
     margin: 3%;
     // font-size: 2vw;
     font-family: 'Quicksand', sans-serif;

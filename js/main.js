@@ -3,20 +3,25 @@ function daysToMills(days) {
 	return days * 24 * 60 * 1000;
 }
 
-const LIGHT_BLUE = '#61ECFF', LIGHT_PINK = '#FF9FBF';
-const BACKGROUND_COLOR = '#292829';
+const LIGHT_BLUE = '#61ECFF', LIGHT_PINK = '#FF9FBF', 
+		RED = '#ff0055',
+		CHARCOAL_BLACK = '#292829', 
+		BACKGROUND_COLOR = '#edf4ea';//292829';
+const LABEL_FONT_SIZE = 17;
 
 google.charts.load('current'); 
 google.charts.setOnLoadCallback(drawVisualization);
 
+let ganttData, ganttWrapper;
+
 function drawVisualization() {
 	// Gantt Chart
-	var ganttData = new google.visualization.DataTable();
+	ganttData = new google.visualization.DataTable();
 	ganttData.addColumn('string', 'Task Id');
 	ganttData.addColumn('string', 'Title');
 	ganttData.addColumn('date', 'Start Date');
 	ganttData.addColumn('date', 'End Date');
-	ganttData.addColumn('number', 'Duration');//~
+	ganttData.addColumn('number', 'Duration');
 	ganttData.addColumn('number', 'Percent Complete');
 	ganttData.addColumn('string', 'Dependencies');
 
@@ -35,43 +40,43 @@ function drawVisualization() {
 		['5009.3', 'Connect P5.js', new Date(2020, 9, 29), new Date(2020, 10, 6), null, 50, '5009.2']
 	]);
 
-	var wrapper2 = new google.visualization.ChartWrapper({
+	ganttWrapper = new google.visualization.ChartWrapper({
 		chartType: 'Gantt',
 		dataTable: ganttData,
-		options: { 
+		options: {
 			// animation: {"startup": true},
 			'title': 'Gantt Chart', 
 			'height': 570,
-
+			// backgroundColor: { fill: BACKGROUND_COLOR },//~
+			percentStyle: { fill: '#ff0fff'},
 			gantt: {
 				// arrows
 				arrow: {
 					angle: 125, 
 					width: 3, 
-					color: LIGHT_BLUE,
+					color: LIGHT_PINK,// LIGHT_BLUE,
 					radius: 30, 
 					spaceAfter: 20
 				},
-				// backgroundColor: { fill: BACKGROUND_COLOR },//~
-				// percentStyle: { fill: '#ffffff'},
+
 				// palette colors https://stackoverflow.com/a/50367073/1446598
 				palette: [
 					{
-					  "color": LIGHT_BLUE,
-					  "dark": "#FFFFFF",
-					//   "light": "#eeeeFF"
+					  "color": CHARCOAL_BLACK,// LIGHT_BLUE,
+					  "dark": "#FFFFFF"
+					//   "light": "#FF0000"
 					}
 				  ],
 				barCornerRadius: 15,
 				labelStyle: {
 					fontName: 'Quicksand',
-					fontSize: 17,
-					// color: 'green'
+					fontSize: LABEL_FONT_SIZE,
 				  },
+
 				// critical path
 				criticalPathEnabled: true, 
 				criticalPathStyle: {
-					stroke: '#ff0055',
+					stroke: RED,
 					strokeWidth: 3.5
 				},
 				// sortTasks: true,
@@ -92,12 +97,12 @@ function drawVisualization() {
 			//   easing: 'out'
 			// }
 			}, 
-		containerId: 'ganttVis'//~
+		containerId: 'ganttVis'
 	});
-  	wrapper2.draw();
+ganttWrapper.draw();
 	
 	// Sankey Diagram
-	let colors = [];//; = ['#89FC20', '#FF9FBF', '#01396B'];//#B934D4 #61ECFF
+	let colors = [];
   
 	var sankeyData = new google.visualization.DataTable();
 	sankeyData.addColumn('string', 'Category');
@@ -136,7 +141,10 @@ function drawVisualization() {
 
 	// generate html tooltip
 	function generateToolTip(category, subCategory, hours) {
-		return `<div class="tooltip"><span class="bold">${category}</span> - ${subCategory}: ${hours} hours</div>`;
+		return `<div class="tooltip">
+					<span class="bold">${category}</span> 
+					- ${subCategory}: ${hours} hours
+				</div>`;
 	}
 
 	// color code sankey based on category
@@ -187,13 +195,20 @@ function drawVisualization() {
 			tooltip: { isHtml: true },
 			// height: 500,
 			sankey: {
+				// fontName: 'Quicksand',
 				node: {
 					// interactivity: true,
 					nodePadding: 4,
-					// labelPadding: 10,
+					labelPadding: 10,
+					labelHheight: 10,
 					// fontName: 'Quicksand',
 					// width: 10,
-					colors: colors
+					colors: colors,
+					label: {
+						fontName: 'Quicksand',
+						fontSize: LABEL_FONT_SIZE,
+						// color: 'green'
+					  },
 				}, 
 				link: {
 					colorMode: 'gradient',
@@ -205,4 +220,42 @@ function drawVisualization() {
 		containerId: 'sankeyVis'
 	});
 	sankeyWrapper.draw();
+}
+
+// add new task to gantt chart
+let addTaskButton = document.querySelector('#addTask');
+	addTaskButton.addEventListener('click', (e) => {
+		// read form inputs
+		let taskId = document.querySelector('#taskId');
+		let taskTitle = document.querySelector('#taskTitle');
+		let start = document.querySelector('#start');
+		let end = document.querySelector('#end');
+		let duration = document.querySelector('#duration');
+		let percentComplete = document.querySelector('#percentComplete');
+
+		// (visual) form validation
+		taskId.style.backgroundColor = (isUndefined(taskId.value) ? RED : 'white');  
+		taskTitle.style.backgroundColor = (isUndefined(taskTitle.value) ? RED : 'white'); 
+		start.style.backgroundColor = (isUndefined(start.value) ? RED : 'white'); 
+		end.style.backgroundColor = (isUndefined(end.value) ? RED : 'white'); 
+		duration.style.backgroundColor = (isUndefined(duration.value) ? RED : 'white'); 
+		percentComplete.style.backgroundColor = (isUndefined(percentComplete.value) ? RED : 'white'); 
+
+		e.preventDefault();
+		ganttData.addRows([
+			[taskId.value, taskTitle.value, 
+				new Date(start.value), new Date(end.value), 
+				parseInt(duration.value), parseInt(percentComplete.value), null]
+			]);
+		ganttWrapper.draw();
+
+		// show success message
+		let successMessage = document.querySelector('.successMessage');
+		successMessage.classList.remove('hidden');
+		successMessage.innerHTML = "Task added!";
+});
+
+// helper method: check if value is undefined
+function isUndefined(val) {
+	return val == undefined || val.length < 1;
 }
