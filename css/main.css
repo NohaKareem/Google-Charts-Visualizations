@@ -26,6 +26,20 @@ p {
   margin: 2.3%;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formInput {
+  display: flex;
+  flex-wrap: wrap;
+}
+.formInput input {
+  margin: 5px;
+}
+
 .visCon {
   margin-top: 5%;
   padding: 5%;

@@ -29,6 +29,22 @@ h2 {
 p {
     margin: 2.3%;
 }
+
+// form
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.formInput {
+    display: flex;
+    flex-wrap: wrap;
+    input {
+        margin: 5px;
+    }
+}
+
+// visualizations
 .visCon {
     margin-top: 5%;
     padding: 5%;
