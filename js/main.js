@@ -1,8 +1,3 @@
-// convert days to milliseconds	https://youtu.be/b0KmEn0UX80 
-function daysToMills(days) {
-	return days * 24 * 60 * 1000;
-}
-
 const LIGHT_BLUE = '#61ECFF', LIGHT_PINK = '#FF9FBF', 
 		GREEN = '#89FC20', RED = '#ff0055',
 		CHARCOAL_BLACK = '#292829', 
@@ -76,6 +71,11 @@ function generateToolTip(category, subCategory, hours) {
 			</div>`;
 }
 
+// convert days to milliseconds (used if need to compute duration)	https://youtu.be/b0KmEn0UX80 
+function daysToMills(days) {
+	return days * 24 * 60 * 1000;
+}
+
 // render gantt chart data
 function populateGanttData() {
 	ganttData = new google.visualization.DataTable();
@@ -111,12 +111,7 @@ function renderGantt() {
 		dataTable: ganttData,
 		options: {
 			title: 'Tasks Gantt Chart',
-			// animation: {
-			// 	duration: 5000, 
-			// 	easing: 'out'
-			// 	// "startup": true
-			// },
-
+	
 			// dynamic height https://stackoverflow.com/a/41449314/1446598
 			height: 95 + ganttData.getNumberOfRows() * trackHeight,
 			percentStyle: { fill: '#ff0fff'},
@@ -159,15 +154,14 @@ function renderGantt() {
 				
 				// grid tracks
 				innerGridTrack: { fill: BACKGROUND_COLOR },
-				// innerGridDarkTrack: { fill: LIGHT_BLUE },
 				innerGridHorizLine: { stroke: 'white' }
 			},
-			animation:{
-			 "startup": true
-			//   duration: 3000,
-			//   easing: 'out'
-			}
-			}, 
+
+			// // animation not supported for gantt
+			// animation:{
+			//  "startup": true
+			// }
+		}, 
 		containerId: 'ganttVis'
 	});
 	ganttWrapper.draw();
@@ -199,9 +193,7 @@ function populateSankeyData() {
 
 		['Reading','Fiction',5, generateToolTip('Study','Fiction',5)],
 		['Reading','Non-fiction',6, generateToolTip('Study','Non-fiction',6)],
-
 		['Reading','5007',5, generateToolTip('Reading','5007',5)],
-
 
 		['Study','5007',6, generateToolTip('Study','5007',6)],
 		['Study','5008',2, generateToolTip('Study','5008',2)],
@@ -224,6 +216,7 @@ function colorCodeSankey() {
 	sankeyData.fg.forEach(node => {
 		let fromNode = node.c[0].v;
 		let toNode = node.c[1].v;
+		console.log(fromNode, toNode)
 		switch(fromNode) {
 			case ('Build'):
 			case ('Class'):
@@ -250,12 +243,13 @@ function colorCodeSankey() {
 							sankeyColors.push('#fce8b2');
 							break;
 					}
-				} else { sankeyColors.push(LIGHT_BLUE); } //#01396B
+				} else { sankeyColors.push(LIGHT_BLUE); } 
 				break;
 			case ('Home'):
 				sankeyColors.push(GREEN);
 				break;
 			case ('Explore'):
+			case ('Reading'):
 				sankeyColors.push(LIGHT_PINK);
 				break;
 		}
@@ -264,9 +258,7 @@ function colorCodeSankey() {
 
 // render sankey diagram
 function renderSankey() {
-	sankeyWrapper = new google.visualization.ChartWrapper(
-		
-		{
+	sankeyWrapper = new google.visualization.ChartWrapper({
 		chartType: 'Sankey',
 		dataTable: sankeyData,
 		options: { 
@@ -274,18 +266,13 @@ function renderSankey() {
 			tooltip: { isHtml: true },
 			height: 900,
 			sankey: {
-				// fontName: 'Quicksand',
 				node: {
-					// interactivity: true,
 					labelPadding: 10,
 					nodePadding: 40,
-					// fontName: 'Quicksand',
-					// width: 10,
 					colors: sankeyColors,
 					label: {
 						fontName: 'Quicksand',
 						fontSize: LABEL_FONT_SIZE,
-						// color: 'green'
 					  },
 				}, 
 				link: {
@@ -295,67 +282,7 @@ function renderSankey() {
 			} 
 		},
 		containerId: 'sankeyVis'
-	},
-	{
-		chartType: 'Gantt',
-		dataTable: ganttData,
-		options: {
-			// // animation not supported in Gantt
-			// animation: {
-			// "startup": true
-			// },
-
-			// dynamic height https://stackoverflow.com/a/41449314/1446598
-			height: 95 + ganttData.getNumberOfRows() * trackHeight,
-			percentStyle: { fill: '#ff0fff'},
-			gantt: {
-				// arrows
-				arrow: {
-					angle: 125, 
-					width: 3, 
-					color: GREEN, //LIGHT_PINK,// LIGHT_BLUE,
-					radius: 30, 
-					spaceAfter: 20,	
-					trackHeight: trackHeight
-				},
-
-				// palette colors https://stackoverflow.com/a/50367073/1446598
-				palette: [
-					{
-					  "color": "#FFF",//CHARCOAL_BLACK,// LIGHT_BLUE,
-					  "dark": GREEN//"#FFFFFF"
-					//   "light": "#FF0000"
-					}
-				  ],
-				barCornerRadius: 15,
-				labelStyle: {
-					fontName: 'Quicksand',
-					fontSize: LABEL_FONT_SIZE,
-				  },
-
-				// critical path
-				criticalPathEnabled: true, 
-				criticalPathStyle: {
-					stroke: RED,
-					strokeWidth: 3.5
-				},
-
-				// grid tracks
-				innerGridTrack: { fill: BACKGROUND_COLOR },
-				// innerGridDarkTrack: { fill: LIGHT_BLUE },
-				innerGridHorizLine: { stroke: 'white' },
-				
-				// // shadows
-				// shadowEnabled: true,
-				// shadowColor: 'white',
-				// shadowOffset: 5
-			}
-		}, 
-		containerId: 'ganttVis'
-	}
-	
-	
-	);
+	});
 	sankeyWrapper.draw();
 }
 
