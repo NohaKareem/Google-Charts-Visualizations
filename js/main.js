@@ -19,70 +19,7 @@ let sankeyData, sankeyWrapper;
 function drawVisualization() {
 	// Gantt Chart
 	populateGanttData();
-	ganttWrapper = new google.visualization.ChartWrapper({
-		chartType: 'Gantt',
-		dataTable: ganttData,
-		options: {
-			// animation: {"startup": true},
-			'title': 'Gantt Chart', 
-			// 'height': 570,
-
-			// dynamic height https://stackoverflow.com/a/41449314/1446598
-			'height': 95 + ganttData.getNumberOfRows() * trackHeight,
-			// backgroundColor: { fill: BACKGROUND_COLOR },//~
-			percentStyle: { fill: '#ff0fff'},
-			gantt: {
-				// arrows
-				arrow: {
-					angle: 125, 
-					width: 3, 
-					color: GREEN, //LIGHT_PINK,// LIGHT_BLUE,
-					radius: 30, 
-					spaceAfter: 20,	
-					trackHeight: trackHeight
-				},
-
-				// palette colors https://stackoverflow.com/a/50367073/1446598
-				palette: [
-					{
-					  "color": "#FFF",//CHARCOAL_BLACK,// LIGHT_BLUE,
-					  "dark": GREEN//"#FFFFFF"
-					//   "light": "#FF0000"
-					}
-				  ],
-				barCornerRadius: 15,
-				labelStyle: {
-					fontName: 'Quicksand',
-					fontSize: LABEL_FONT_SIZE,
-				  },
-
-				// critical path
-				criticalPathEnabled: true, 
-				criticalPathStyle: {
-					stroke: RED,
-					strokeWidth: 3.5
-				},
-				// sortTasks: true,
-
-				// // shadows
-				// shadowEnabled: true,
-				// shadowColor: '#FF0000',
-				// shadowOffset: 10,
-				
-				// grid tracks
-				innerGridTrack: { fill: BACKGROUND_COLOR },
-				// innerGridDarkTrack: { fill: 'white' },
-				innerGridHorizLine: { stroke: 'white' }
-			},
-			// animation:{
-			//  "startup": true,
-			//   duration: 3000,
-			//   easing: 'out'
-			// }
-			}, 
-		containerId: 'ganttVis'
-	});
-	ganttWrapper.draw();
+	renderGantt();
 
 	// Sankey Diagram
 	let colors = [];
@@ -166,6 +103,7 @@ function drawVisualization() {
 // add new task to gantt chart
 let addTaskButton = document.querySelector('#addTask');
 	addTaskButton.addEventListener('click', (e) => {
+		
 		// read form inputs
 		let taskId = document.querySelector('#taskId');
 		let taskTitle = document.querySelector('#taskTitle');
@@ -190,8 +128,7 @@ let addTaskButton = document.querySelector('#addTask');
 			]);
 		
 		
-			ganttWrapper.options.height = 95 + ganttData.getNumberOfRows() * trackHeight;
-		ganttWrapper.draw();
+		renderGantt();
 
 		// show success message
 		let successMessage = document.querySelector('.successMessage');
@@ -237,6 +174,73 @@ function populateGanttData() {
 		['5009.3', 'Connect P5.js', new Date(2020, 9, 29), new Date(2020, 10, 6), null, 50, '5009.2']
 	]);
 
+}
+
+function renderGantt() {
+	ganttWrapper = new google.visualization.ChartWrapper({
+		chartType: 'Gantt',
+		dataTable: ganttData,
+		options: {
+			// animation: {"startup": true},
+			'title': 'Gantt Chart', 
+			// 'height': 570,
+
+			// dynamic height https://stackoverflow.com/a/41449314/1446598
+			'height': 95 + ganttData.getNumberOfRows() * trackHeight,
+			// backgroundColor: { fill: BACKGROUND_COLOR },//~
+			percentStyle: { fill: '#ff0fff'},
+			gantt: {
+				// arrows
+				arrow: {
+					angle: 125, 
+					width: 3, 
+					color: GREEN, //LIGHT_PINK,// LIGHT_BLUE,
+					radius: 30, 
+					spaceAfter: 20,	
+					trackHeight: trackHeight
+				},
+
+				// palette colors https://stackoverflow.com/a/50367073/1446598
+				palette: [
+					{
+					  "color": "#FFF",//CHARCOAL_BLACK,// LIGHT_BLUE,
+					  "dark": GREEN//"#FFFFFF"
+					//   "light": "#FF0000"
+					}
+				  ],
+				barCornerRadius: 15,
+				labelStyle: {
+					fontName: 'Quicksand',
+					fontSize: LABEL_FONT_SIZE,
+				  },
+
+				// critical path
+				criticalPathEnabled: true, 
+				criticalPathStyle: {
+					stroke: RED,
+					strokeWidth: 3.5
+				},
+				// sortTasks: true,
+
+				// // shadows
+				// shadowEnabled: true,
+				// shadowColor: '#FF0000',
+				// shadowOffset: 10,
+				
+				// grid tracks
+				innerGridTrack: { fill: BACKGROUND_COLOR },
+				// innerGridDarkTrack: { fill: 'white' },
+				innerGridHorizLine: { stroke: 'white' }
+			},
+			// animation:{
+			//  "startup": true,
+			//   duration: 3000,
+			//   easing: 'out'
+			// }
+			}, 
+		containerId: 'ganttVis'
+	});
+	ganttWrapper.draw();
 }
 
 function populateSankeyData() {
