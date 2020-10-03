@@ -115,6 +115,12 @@ function renderGantt() {
 			// dynamic height https://stackoverflow.com/a/41449314/1446598
 			height: 95 + ganttData.getNumberOfRows() * trackHeight,
 			percentStyle: { fill: '#ff0fff'},
+
+			// // animation not supported for gantt
+			// animation:{
+			//  "startup": true
+			// }
+
 			gantt: {
 				// arrows
 				arrow: {
@@ -155,12 +161,7 @@ function renderGantt() {
 				// grid tracks
 				innerGridTrack: { fill: BACKGROUND_COLOR },
 				innerGridHorizLine: { stroke: 'white' }
-			},
-
-			// // animation not supported for gantt
-			// animation:{
-			//  "startup": true
-			// }
+			}
 		}, 
 		containerId: 'ganttVis'
 	});
@@ -265,6 +266,12 @@ function renderSankey() {
 			title: 'Weekly time snapshot',
 			tooltip: { isHtml: true },
 			height: 900,
+
+			// // animation not supported for gantt
+			// animation:{
+			//  "startup": true
+			// }
+			
 			sankey: {
 				node: {
 					labelPadding: 10,
@@ -279,7 +286,7 @@ function renderSankey() {
 					colorMode: 'gradient',
 					colors: sankeyColors
 				}
-			} 
+			}
 		},
 		containerId: 'sankeyVis'
 	});
