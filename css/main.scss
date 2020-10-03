@@ -25,11 +25,23 @@ h1 {
 }
 
 h2 {
+    margin-top: 3%;
     font-size: 1.5vw;
 }
 
 p {
     margin: 2.3%;
+}
+
+.hideToggleGantt, .hideToggleSankey {
+    font-size: 1vw;
+    margin-left: 5px;
+    font-style: italic;
+}
+
+.hideToggleGantt:hover, .hideToggleSankey:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 // form
@@ -56,6 +68,7 @@ form {
 
 
 }
+
 .formInput {
     display: flex;
     flex-wrap: wrap;
@@ -74,7 +87,7 @@ form {
 hr {
     border-top: 3px solid white;
     margin: 3%;
-    width: 100%;
+    width: 100vw;
 }
 
 // visualizations

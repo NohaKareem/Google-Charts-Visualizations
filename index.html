@@ -15,40 +15,43 @@
             <h1>Google Charts Dashboard</h1>
         </header>
         <div class="visCon">
-            <h2>Tasks Gantt Chart</h2>
-            <p>A Gantt chart illustrating upcoming tasks. Critical path arrow(s) marked in red</p>
-            <div id="ganttVis" class="vis"></div>
-            <form action="#">
-                <div class="formInput">
-                    <input type="text" name="taskId" id="taskId" placeholder="task id" value="new task id">
-                    <label for="taskId" class="hidden">task id</label>
+            <h2>Tasks Gantt Chart <span class="hideToggleGantt">hide</span></h2>
+            <div id="ganttVisCon">
+                <p>A Gantt chart illustrating upcoming tasks. Critical path arrow(s) marked in red</p>
+                <div id="ganttVis" class="vis"></div>
+                <form action="#">
+                    <div class="formInput">
+                        <input type="text" name="taskId" id="taskId" placeholder="task id" value="new task id">
+                        <label for="taskId" class="hidden">task id</label>
 
-                    <input type="text" name="taskTitle" id="taskTitle" placeholder="task title" value="new task title">
-                    <label for="taskTitle" class="hidden">task title</label>
+                        <input type="text" name="taskTitle" id="taskTitle" placeholder="task title" value="new task title">
+                        <label for="taskTitle" class="hidden">task title</label>
 
-                    <input type="date" name="start" id="start" value="2020-10-02">
-                    <label for="start" class="hidden">start</label>
+                        <input type="date" name="start" id="start" value="2020-10-02">
+                        <label for="start" class="hidden">start</label>
 
-                    <input type="date" name="end" id="end" value="2020-10-03">
-                    <label for="end" class="hidden">end</label>
+                        <input type="date" name="end" id="end" value="2020-10-03">
+                        <label for="end" class="hidden">end</label>
 
-                    <input type="number" name="duration" id="duration" placeholder="duration" value="1">
-                    <label for="duration" class="hidden">duration</label>
+                        <input type="number" name="duration" id="duration" placeholder="duration" value="1">
+                        <label for="duration" class="hidden">duration</label>
 
-                    <input type="number" name="percentComplete" id="percentComplete" placeholder="percent complete" value="20">
-                    <label for="percentComplete" class="hidden">percent complete</label>
-                </div>
+                        <input type="number" name="percentComplete" id="percentComplete" placeholder="percent complete" value="20">
+                        <label for="percentComplete" class="hidden">percent complete</label>
+                    </div>
 
-                <!-- <input type="text" placeholder="dependencies"> -->
-                <button id="addTask">add task</button>
-            </form>
-            <p class="hidden successMessage"></p>
-
+                    <!-- <input type="text" placeholder="dependencies"> -->
+                    <button id="addTask">add task</button>
+                </form>
+                <p class="hidden successMessage"></p>
             <hr>
+        </div>
 
-            <h2>Weekly time snapshot</h2>
+        <h2>Weekly time snapshot<span class="hideToggleSankey">hide</span></h2>
+        <div id="sankeyVisCon">
             <p>A sankey diagram depicting a categorized snapshot into a weekly timelog</p>
             <div id="sankeyVis" class="vis"></div>
+        </div>
         </div>
         <script src="js/main.js"></script>
     </body>

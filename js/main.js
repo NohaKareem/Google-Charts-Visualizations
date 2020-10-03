@@ -187,7 +187,7 @@ function populateSankeyData() {
 		['Build','Organize',2, generateToolTip('Build','Organize',2)],
 		['Build','Class',18, generateToolTip('Build','Class',18)],
 		['Build','Work',5, generateToolTip('Build','Work',5)],
-		['Build','Research',3, generateToolTip('Build','Research',3)],
+		['Build','Research',4, generateToolTip('Build','Research',4)],
 		
 		['Home','Cook',5, generateToolTip('Home','Cook',5)],
 		['Home','Clean',5, generateToolTip('Home','Clean',5)],
@@ -358,3 +358,15 @@ function renderSankey() {
 	);
 	sankeyWrapper.draw();
 }
+
+// toggle Gantt visibility 
+let hideToggleGantt = document.querySelector('.hideToggleGantt');
+hideToggleGantt.addEventListener('click', (e) => {
+	document.querySelector('#ganttVisCon').classList.toggle('hidden');
+});
+
+// toggle Sankey visibility 
+let hideToggleSankey = document.querySelector('.hideToggleSankey');
+hideToggleSankey.addEventListener('click', (e) => {
+	document.querySelector('#sankeyVisCon').classList.toggle('hidden');
+});
