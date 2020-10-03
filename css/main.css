@@ -30,6 +30,20 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 3%;
+}
+form button {
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+  border: 1px solid white;
+  border-radius: 30px;
+  margin-top: 3%;
+  padding: 10px 20px;
+}
+form button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: #292829;
 }
 
 .formInput {
@@ -38,6 +52,18 @@ form {
 }
 .formInput input {
   margin: 5px;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  border-bottom: 3px solid white;
+  color: white;
+  text-align: center;
+  font-family: "Quicksand";
+}
+
+hr {
+  border-top: 3px solid white;
+  margin: 3%;
+  width: 100%;
 }
 
 .visCon {
