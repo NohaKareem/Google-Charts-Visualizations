@@ -186,18 +186,28 @@ function populateSankeyData() {
 		['Build','Class',18, generateToolTip('Build','Class',18)],
 		['Build','Work',5, generateToolTip('Build','Work',5)],
 		['Build','Research',3, generateToolTip('Build','Research',3)],
+		
 		['Home','Cook',5, generateToolTip('Home','Cook',5)],
 		['Home','Clean',5, generateToolTip('Home','Clean',5)],
 		['Home','Organize',5, generateToolTip('Home','Organize',5)],
+
 		['Explore','YouTube',5, generateToolTip('Explore','YouTube',5)],
 		['Explore','Reading',5, generateToolTip('Explore','Reading',5)],
 		['Explore','Online Class',5, generateToolTip('','Online Class',5)],
+
+		['Reading','Fiction',5, generateToolTip('Study','Fiction',5)],
+		['Reading','Non-fiction',6, generateToolTip('Study','Non-fiction',6)],
+
+		['Reading','5007',5, generateToolTip('Reading','5007',5)],
+
+
 		['Study','5007',6, generateToolTip('Study','5007',6)],
 		['Study','5008',2, generateToolTip('Study','5008',2)],
 		['Study','5009',3, generateToolTip('Study','5009',3)],
 		['Study','5010',4, generateToolTip('Study','5010',4)],
 		['Study','5011',5, generateToolTip('Study','5011',5)],
 		['Study','5012',3, generateToolTip('Study','5012',3)],	
+
 		['Class','5007',3, generateToolTip('Class','5007',3)],
 		['Class','5008',3, generateToolTip('Class','5008',3)],
 		['Class','5009',3, generateToolTip('Class','5009',3)],
