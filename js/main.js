@@ -101,7 +101,17 @@ function populateGanttData() {
 		['5009.2', 'Setup Arduino + Johnny Five', new Date(2020, 9, 22), new Date(2020, 9, 29), null, 50, '5009.1'],
 		['5009.3', 'Connect P5.js', new Date(2020, 9, 29), new Date(2020, 10, 6), null, 50, '5009.2']
 	]);
+	
+	// let dependencies = document.querySelector('#dependencies');
 
+	// populate dependencies for input (fg holds ganttData rows) https://stackoverflow.com/a/6601129/1446598
+	// ganttData.fg.forEach(node => {
+	// 	let currTaskId = node.c[0].v;
+	// 	let newSelectOption = document.createElement("option");
+	// 	newSelectOption.value = currTaskId;
+	// 	newSelectOption.innerHTML = currTaskId;
+	// 	dependencies.appendChild(newSelectOption);
+	// });
 }
 
 // render gantt chart
@@ -137,7 +147,9 @@ function renderGantt() {
 					{
 					  "color": "#FFF",
 					  "dark": GREEN,
-					  "light": LIGHT_BLUE // highlight color for other tasks on click
+
+					  // highlight color for other tasks on click
+					  "light": LIGHT_BLUE 
 					}
 				  ],
 				barCornerRadius: 15,
@@ -190,10 +202,10 @@ function populateSankeyData() {
 
 		['Explore','YouTube',5, generateToolTip('Explore','YouTube',5)],
 		['Explore','Reading',5, generateToolTip('Explore','Reading',5)],
-		['Explore','Online Class',5, generateToolTip('','Online Class',5)],
+		['Explore','Online Class',5, generateToolTip('Explore','Online Class',5)],
 
-		['Reading','Fiction',5, generateToolTip('Study','Fiction',5)],
-		['Reading','Non-fiction',6, generateToolTip('Study','Non-fiction',6)],
+		['Reading','Fiction',5, generateToolTip('Reading','Fiction',5)],
+		['Reading','Non-fiction',6, generateToolTip('Reading','Non-fiction',6)],
 		['Reading','5007',5, generateToolTip('Reading','5007',5)],
 
 		['Study','5007',6, generateToolTip('Study','5007',6)],
@@ -212,17 +224,17 @@ function populateSankeyData() {
 	]);
 }
 
-// color code sankey based on category
+// color code sankey based on category (fg holds sankeyData rows)
 function colorCodeSankey() {
 	sankeyData.fg.forEach(node => {
 		let fromNode = node.c[0].v;
 		let toNode = node.c[1].v;
-		console.log(fromNode, toNode)
 		switch(fromNode) {
 			case ('Build'):
 			case ('Class'):
 			case ('Study'):
 				if(toNode[0] === '5') {
+
 					// color code subcategories
 					switch(toNode) {
 						case '5007':

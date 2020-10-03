@@ -73,7 +73,7 @@ form {
     display: flex;
     flex-wrap: wrap;
 
-    input {
+    input, select {
         margin: 5px;
         background-color: $TRANSPARENT;
         border: none;
@@ -81,6 +81,10 @@ form {
         color: white;
         text-align: center;
         font-family: 'Quicksand';
+
+        option {
+            color: $CHARCOAL_BLACK;
+        }
     }
 }
 
