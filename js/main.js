@@ -4,9 +4,9 @@ function daysToMills(days) {
 }
 
 const LIGHT_BLUE = '#61ECFF', LIGHT_PINK = '#FF9FBF', 
-		RED = '#ff0055',
+		GREEN = '#89FC20', RED = '#ff0055',
 		CHARCOAL_BLACK = '#292829', 
-		BACKGROUND_COLOR = '#edf4ea';//292829';
+		BACKGROUND_COLOR = '#292829';//edf4ea';//
 const LABEL_FONT_SIZE = 17;
 
 google.charts.load('current'); 
@@ -34,7 +34,7 @@ function drawVisualization() {
 		['5010.1', 'Google Charts API', new Date(2020, 9, 26), new Date(2020, 10, 2), null, 65, '5010.1.0'],
 		['5012.2', 'Illustrate logo', new Date(2020, 10, 1), new Date(2020, 10, 8), null, 0, '5012.1'],
 		['5011.1', 'Explore Kepler.gl', new Date(2020, 9, 24), new Date(2020, 10, 1), null, 100, null],
-		['5011.2', 'Explore Kepler.gl using formatted data', new Date(2020, 10, 1), new Date(2020, 10, 8), null, 0, '5011.1'],
+		['5011.2', 'Explore Kepler.gl using new data', new Date(2020, 10, 1), new Date(2020, 10, 8), null, 0, '5011.1'],
 		['5009.1', 'Setup Raspberry Pi', new Date(2020, 9, 21), new Date(2020, 9, 22), null, 100, null],
 		['5009.2', 'Setup Arduino + Johnny Five', new Date(2020, 9, 22), new Date(2020, 9, 29), null, 50, '5009.1'],
 		['5009.3', 'Connect P5.js', new Date(2020, 9, 29), new Date(2020, 10, 6), null, 50, '5009.2']
@@ -54,7 +54,7 @@ function drawVisualization() {
 				arrow: {
 					angle: 125, 
 					width: 3, 
-					color: LIGHT_PINK,// LIGHT_BLUE,
+					color: GREEN, //LIGHT_PINK,// LIGHT_BLUE,
 					radius: 30, 
 					spaceAfter: 20
 				},
@@ -62,8 +62,8 @@ function drawVisualization() {
 				// palette colors https://stackoverflow.com/a/50367073/1446598
 				palette: [
 					{
-					  "color": CHARCOAL_BLACK,// LIGHT_BLUE,
-					  "dark": "#FFFFFF"
+					  "color": "#FFF",//CHARCOAL_BLACK,// LIGHT_BLUE,
+					  "dark": GREEN//"#FFFFFF"
 					//   "light": "#FF0000"
 					}
 				  ],
@@ -180,7 +180,7 @@ ganttWrapper.draw();
 				} else { colors.push(LIGHT_BLUE); } //#01396B
 				break;
 			case ('Home'):
-				colors.push('#89FC20');
+				colors.push(GREEN);
 				break;
 			case ('Explore'):
 				colors.push(LIGHT_PINK);
