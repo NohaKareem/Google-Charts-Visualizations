@@ -13,40 +13,22 @@ google.charts.load('current');
 google.charts.setOnLoadCallback(drawVisualization);
 
 let ganttData, ganttWrapper;
+let trackHeight = 40;
+let sankeyData, sankeyWrapper;
 
 function drawVisualization() {
 	// Gantt Chart
-	ganttData = new google.visualization.DataTable();
-	ganttData.addColumn('string', 'Task Id');
-	ganttData.addColumn('string', 'Title');
-	ganttData.addColumn('date', 'Start Date');
-	ganttData.addColumn('date', 'End Date');
-	ganttData.addColumn('number', 'Duration');
-	ganttData.addColumn('number', 'Percent Complete');
-	ganttData.addColumn('string', 'Dependencies');
-
-	ganttData.addRows([
-		['6007.1', 'Read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 100, null],
-		['5012.1', 'Sketch logo ideas', new Date(2020, 9, 23), new Date(2020, 9, 30), null, 100, null],
-		['6007.2', 'Write paper', new Date(2020, 9, 28), new Date(2020, 10, 5), null, 10, '6007.1'],
-		['GenEd.1', 'Write willpower challenge plan', new Date(2020, 9, 21), new Date(2020, 10, 3), null, 15, null],
-		['5010.1.0', 'Explore Google Charts API', new Date(2020, 9, 23), new Date(2020, 9, 27), null, 100, null],
-		['5010.1', 'Google Charts API', new Date(2020, 9, 26), new Date(2020, 10, 2), null, 65, '5010.1.0'],
-		['5012.2', 'Illustrate logo', new Date(2020, 10, 1), new Date(2020, 10, 8), null, 0, '5012.1'],
-		['5011.1', 'Explore Kepler.gl', new Date(2020, 9, 24), new Date(2020, 10, 1), null, 100, null],
-		['5011.2', 'Explore Kepler.gl using new data', new Date(2020, 10, 1), new Date(2020, 10, 8), null, 0, '5011.1'],
-		['5009.1', 'Setup Raspberry Pi', new Date(2020, 9, 21), new Date(2020, 9, 22), null, 100, null],
-		['5009.2', 'Setup Arduino + Johnny Five', new Date(2020, 9, 22), new Date(2020, 9, 29), null, 50, '5009.1'],
-		['5009.3', 'Connect P5.js', new Date(2020, 9, 29), new Date(2020, 10, 6), null, 50, '5009.2']
-	]);
-
+	populateGanttData();
 	ganttWrapper = new google.visualization.ChartWrapper({
 		chartType: 'Gantt',
 		dataTable: ganttData,
 		options: {
 			// animation: {"startup": true},
 			'title': 'Gantt Chart', 
-			'height': 570,
+			// 'height': 570,
+
+			// dynamic height https://stackoverflow.com/a/41449314/1446598
+			'height': 95 + ganttData.getNumberOfRows() * trackHeight,
 			// backgroundColor: { fill: BACKGROUND_COLOR },//~
 			percentStyle: { fill: '#ff0fff'},
 			gantt: {
@@ -56,7 +38,8 @@ function drawVisualization() {
 					width: 3, 
 					color: GREEN, //LIGHT_PINK,// LIGHT_BLUE,
 					radius: 30, 
-					spaceAfter: 20
+					spaceAfter: 20,	
+					trackHeight: trackHeight
 				},
 
 				// palette colors https://stackoverflow.com/a/50367073/1446598
@@ -99,53 +82,11 @@ function drawVisualization() {
 			}, 
 		containerId: 'ganttVis'
 	});
-ganttWrapper.draw();
-	
+	ganttWrapper.draw();
+
 	// Sankey Diagram
 	let colors = [];
-  
-	var sankeyData = new google.visualization.DataTable();
-	sankeyData.addColumn('string', 'Category');
-	sankeyData.addColumn('string', 'Subcategory');
-	sankeyData.addColumn('number', 'Hours');
-	sankeyData.addColumn({'type': 'string', 'role': 'tooltip', 'p': { 'html': 'true' }});
-
-	// weights reflect hours per week
-	sankeyData.addRows([
-		['Build','Study',6, generateToolTip('Build','Study',6)],
-		['Build','Organize',2, generateToolTip('Build','Organize',2)],
-		['Build','Class',18, generateToolTip('Build','Class',18)],
-		['Build','Work',5, generateToolTip('Build','Work',5)],
-		['Build','Research',3, generateToolTip('Build','Research',3)],
-		['Home','Cook',5, generateToolTip('Home','Cook',5)],
-		['Home','Clean',5, generateToolTip('Home','Clean',5)],
-		['Home','Organize',5, generateToolTip('Home','Organize',5)],
-		['Explore','YouTube',5, generateToolTip('Explore','YouTube',5)],
-		['Explore','Reading',5, generateToolTip('Explore','Reading',5)],
-		['Explore','Online Class',5, generateToolTip('','Online Class',5)],
-		['Study','5007',6, generateToolTip('Study','5007',6)],
-		['Study','5008',2, generateToolTip('Study','5008',2)],
-		['Study','5009',3, generateToolTip('Study','5009',3)],
-		['Study','5010',4, generateToolTip('Study','5010',4)],
-		['Study','5011',5, generateToolTip('Study','5011',5)],
-		['Study','5012',3, generateToolTip('Study','5012',3)],	
-		['Class','5007',3, generateToolTip('Class','5007',3)],
-		['Class','5008',3, generateToolTip('Class','5008',3)],
-		['Class','5009',3, generateToolTip('Class','5009',3)],
-		['Class','5010',3, generateToolTip('Class','5010',3)],
-		['Class','5011',3, generateToolTip('Class','5011',3)],
-		['Class','5012',3, generateToolTip('Class','5012',3)]
-	]);
-	// console.log(sankeyData.fg)
-	// console.log(sankeyData.fg[20].c[0].v)
-
-	// generate html tooltip
-	function generateToolTip(category, subCategory, hours) {
-		return `<div class="tooltip">
-					<span class="bold">${category}</span> 
-					- ${subCategory}: ${hours} hours
-				</div>`;
-	}
+	populateSankeyData();
 
 	// color code sankey based on category
 	sankeyData.fg.forEach(node => {
@@ -188,7 +129,7 @@ ganttWrapper.draw();
 		}
 	});
 	// sankey wrapper
-	var sankeyWrapper = new google.visualization.ChartWrapper({
+	sankeyWrapper = new google.visualization.ChartWrapper({
 		chartType: 'Sankey',
 		dataTable: sankeyData,
 		options: { 
@@ -234,12 +175,12 @@ let addTaskButton = document.querySelector('#addTask');
 		let percentComplete = document.querySelector('#percentComplete');
 
 		// (visual) form validation
-		taskId.style.backgroundColor = (isUndefined(taskId.value) ? RED : 'white');  
-		taskTitle.style.backgroundColor = (isUndefined(taskTitle.value) ? RED : 'white'); 
-		start.style.backgroundColor = (isUndefined(start.value) ? RED : 'white'); 
-		end.style.backgroundColor = (isUndefined(end.value) ? RED : 'white'); 
-		duration.style.backgroundColor = (isUndefined(duration.value) ? RED : 'white'); 
-		percentComplete.style.backgroundColor = (isUndefined(percentComplete.value) ? RED : 'white'); 
+		taskId.style.backgroundColor = (isUndefined(taskId.value) ? RED : BACKGROUND_COLOR);  
+		taskTitle.style.backgroundColor = (isUndefined(taskTitle.value) ? RED : BACKGROUND_COLOR); 
+		start.style.backgroundColor = (isUndefined(start.value) ? RED : BACKGROUND_COLOR); 
+		end.style.backgroundColor = (isUndefined(end.value) ? RED : BACKGROUND_COLOR); 
+		duration.style.backgroundColor = (isUndefined(duration.value) ? RED : BACKGROUND_COLOR); 
+		percentComplete.style.backgroundColor = (isUndefined(percentComplete.value) ? RED : BACKGROUND_COLOR); 
 
 		e.preventDefault();
 		ganttData.addRows([
@@ -247,6 +188,9 @@ let addTaskButton = document.querySelector('#addTask');
 				new Date(start.value), new Date(end.value), 
 				parseInt(duration.value), parseInt(percentComplete.value), null]
 			]);
+		
+		
+			ganttWrapper.options.height = 95 + ganttData.getNumberOfRows() * trackHeight;
 		ganttWrapper.draw();
 
 		// show success message
@@ -258,4 +202,74 @@ let addTaskButton = document.querySelector('#addTask');
 // helper method: check if value is undefined
 function isUndefined(val) {
 	return val == undefined || val.length < 1;
+}
+
+// generate html tooltip
+function generateToolTip(category, subCategory, hours) {
+	return `<div class="tooltip">
+				<span class="bold">${category}</span> 
+				- ${subCategory}: ${hours} hours
+			</div>`;
+}
+
+function populateGanttData() {
+	ganttData = new google.visualization.DataTable();
+	ganttData.addColumn('string', 'Task Id');
+	ganttData.addColumn('string', 'Title');
+	ganttData.addColumn('date', 'Start Date');
+	ganttData.addColumn('date', 'End Date');
+	ganttData.addColumn('number', 'Duration');
+	ganttData.addColumn('number', 'Percent Complete');
+	ganttData.addColumn('string', 'Dependencies');
+
+	ganttData.addRows([
+		['6007.1', 'Read ch. 7', new Date(2020, 9, 21), new Date(2020, 9, 28), null, 100, null],
+		['5012.1', 'Sketch logo ideas', new Date(2020, 9, 23), new Date(2020, 9, 30), null, 100, null],
+		['6007.2', 'Write paper', new Date(2020, 9, 28), new Date(2020, 10, 5), null, 10, '6007.1'],
+		['GenEd.1', 'Write willpower challenge plan', new Date(2020, 9, 21), new Date(2020, 10, 3), null, 15, null],
+		['5010.1.0', 'Explore Google Charts API', new Date(2020, 9, 23), new Date(2020, 9, 27), null, 100, null],
+		['5010.1', 'Google Charts API', new Date(2020, 9, 26), new Date(2020, 10, 2), null, 65, '5010.1.0'],
+		['5012.2', 'Illustrate logo', new Date(2020, 10, 1), new Date(2020, 10, 8), null, 0, '5012.1'],
+		['5011.1', 'Explore Kepler.gl', new Date(2020, 9, 24), new Date(2020, 10, 1), null, 100, null],
+		['5011.2', 'Explore Kepler.gl using new data', new Date(2020, 10, 1), new Date(2020, 10, 8), null, 0, '5011.1'],
+		['5009.1', 'Setup Raspberry Pi', new Date(2020, 9, 21), new Date(2020, 9, 22), null, 100, null],
+		['5009.2', 'Setup Arduino + Johnny Five', new Date(2020, 9, 22), new Date(2020, 9, 29), null, 50, '5009.1'],
+		['5009.3', 'Connect P5.js', new Date(2020, 9, 29), new Date(2020, 10, 6), null, 50, '5009.2']
+	]);
+
+}
+
+function populateSankeyData() {
+	sankeyData = new google.visualization.DataTable();
+	sankeyData.addColumn('string', 'Category');
+	sankeyData.addColumn('string', 'Subcategory');
+	sankeyData.addColumn('number', 'Hours');
+	sankeyData.addColumn({'type': 'string', 'role': 'tooltip', 'p': { 'html': 'true' }});
+
+	// weights reflect hours per week
+	sankeyData.addRows([
+		['Build','Study',6, generateToolTip('Build','Study',6)],
+		['Build','Organize',2, generateToolTip('Build','Organize',2)],
+		['Build','Class',18, generateToolTip('Build','Class',18)],
+		['Build','Work',5, generateToolTip('Build','Work',5)],
+		['Build','Research',3, generateToolTip('Build','Research',3)],
+		['Home','Cook',5, generateToolTip('Home','Cook',5)],
+		['Home','Clean',5, generateToolTip('Home','Clean',5)],
+		['Home','Organize',5, generateToolTip('Home','Organize',5)],
+		['Explore','YouTube',5, generateToolTip('Explore','YouTube',5)],
+		['Explore','Reading',5, generateToolTip('Explore','Reading',5)],
+		['Explore','Online Class',5, generateToolTip('','Online Class',5)],
+		['Study','5007',6, generateToolTip('Study','5007',6)],
+		['Study','5008',2, generateToolTip('Study','5008',2)],
+		['Study','5009',3, generateToolTip('Study','5009',3)],
+		['Study','5010',4, generateToolTip('Study','5010',4)],
+		['Study','5011',5, generateToolTip('Study','5011',5)],
+		['Study','5012',3, generateToolTip('Study','5012',3)],	
+		['Class','5007',3, generateToolTip('Class','5007',3)],
+		['Class','5008',3, generateToolTip('Class','5008',3)],
+		['Class','5009',3, generateToolTip('Class','5009',3)],
+		['Class','5010',3, generateToolTip('Class','5010',3)],
+		['Class','5011',3, generateToolTip('Class','5011',3)],
+		['Class','5012',3, generateToolTip('Class','5012',3)]
+	]);
 }
