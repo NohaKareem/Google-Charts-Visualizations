@@ -8,6 +8,7 @@ const LIGHT_BLUE = '#61ECFF', LIGHT_PINK = '#FF9FBF',
 		CHARCOAL_BLACK = '#292829', 
 		BACKGROUND_COLOR = '#292829';//edf4ea';//
 const LABEL_FONT_SIZE = 17;
+let sankeyColors = [];
 
 google.charts.load('current'); 
 google.charts.setOnLoadCallback(drawVisualization);
@@ -22,82 +23,9 @@ function drawVisualization() {
 	renderGantt();
 
 	// Sankey Diagram
-	let colors = [];
 	populateSankeyData();
-
-	// color code sankey based on category
-	sankeyData.fg.forEach(node => {
-		let fromNode = node.c[0].v;
-		let toNode = node.c[1].v;
-		switch(fromNode) {
-			case ('Build'):
-			case ('Class'):
-			case ('Study'):
-				if(toNode[0] === '5') {
-					// color code subcategories
-					switch(toNode) {
-						case '5007':
-							colors.push('#d9d2e9');
-							break;
-						case '5008':
-							colors.push('#fce8b2');
-							break;
-						case '5009':
-							colors.push('#d5a6bd');
-							break;
-						case '5010':
-							colors.push('#4285f4');
-							break;
-						case '5011':
-							colors.push('#46bdc6');
-							break;
-						case '5012':
-							colors.push('#fce8b2');
-							break;
-					}
-				} else { colors.push(LIGHT_BLUE); } //#01396B
-				break;
-			case ('Home'):
-				colors.push(GREEN);
-				break;
-			case ('Explore'):
-				colors.push(LIGHT_PINK);
-				break;
-		}
-	});
-	// sankey wrapper
-	sankeyWrapper = new google.visualization.ChartWrapper({
-		chartType: 'Sankey',
-		dataTable: sankeyData,
-		options: { 
-			tooltip: { isHtml: true },
-			// height: 500,
-			sankey: {
-				// fontName: 'Quicksand',
-				node: {
-					// interactivity: true,
-					nodePadding: 4,
-					labelPadding: 10,
-					labelHheight: 10,
-					// fontName: 'Quicksand',
-					// width: 10,
-					colors: colors,
-					label: {
-						fontName: 'Quicksand',
-						fontSize: LABEL_FONT_SIZE,
-						// color: 'green'
-					  },
-				}, 
-				link: {
-					colorMode: 'gradient',
-					colors: colors
-
-				}
-			} 
-		},
-		containerId: 'sankeyVis'
-	});
-	sankeyWrapper.draw();
+	colorCodeSankey();
+	renderSankey();
 }
 
 // add new task to gantt chart
@@ -127,7 +55,6 @@ let addTaskButton = document.querySelector('#addTask');
 				parseInt(duration.value), parseInt(percentComplete.value), null]
 			]);
 		
-		
 		renderGantt();
 
 		// show success message
@@ -149,6 +76,7 @@ function generateToolTip(category, subCategory, hours) {
 			</div>`;
 }
 
+// render gantt chart data
 function populateGanttData() {
 	ganttData = new google.visualization.DataTable();
 	ganttData.addColumn('string', 'Task Id');
@@ -176,6 +104,7 @@ function populateGanttData() {
 
 }
 
+// render gantt chart
 function renderGantt() {
 	ganttWrapper = new google.visualization.ChartWrapper({
 		chartType: 'Gantt',
@@ -243,6 +172,7 @@ function renderGantt() {
 	ganttWrapper.draw();
 }
 
+// populate sankey diagram data
 function populateSankeyData() {
 	sankeyData = new google.visualization.DataTable();
 	sankeyData.addColumn('string', 'Category');
@@ -276,4 +206,83 @@ function populateSankeyData() {
 		['Class','5011',3, generateToolTip('Class','5011',3)],
 		['Class','5012',3, generateToolTip('Class','5012',3)]
 	]);
+}
+
+// color code sankey based on category
+function colorCodeSankey() {
+	sankeyData.fg.forEach(node => {
+		let fromNode = node.c[0].v;
+		let toNode = node.c[1].v;
+		switch(fromNode) {
+			case ('Build'):
+			case ('Class'):
+			case ('Study'):
+				if(toNode[0] === '5') {
+					// color code subcategories
+					switch(toNode) {
+						case '5007':
+							sankeyColors.push('#d9d2e9');
+							break;
+						case '5008':
+							sankeyColors.push('#fce8b2');
+							break;
+						case '5009':
+							sankeyColors.push('#d5a6bd');
+							break;
+						case '5010':
+							sankeyColors.push('#4285f4');
+							break;
+						case '5011':
+							sankeyColors.push('#46bdc6');
+							break;
+						case '5012':
+							sankeyColors.push('#fce8b2');
+							break;
+					}
+				} else { sankeyColors.push(LIGHT_BLUE); } //#01396B
+				break;
+			case ('Home'):
+				sankeyColors.push(GREEN);
+				break;
+			case ('Explore'):
+				sankeyColors.push(LIGHT_PINK);
+				break;
+		}
+	});
+}
+
+// render sankey diagram
+function renderSankey() {
+	sankeyWrapper = new google.visualization.ChartWrapper({
+		chartType: 'Sankey',
+		dataTable: sankeyData,
+		options: { 
+			tooltip: { isHtml: true },
+			// height: 500,
+			sankey: {
+				// fontName: 'Quicksand',
+				node: {
+					// interactivity: true,
+					nodePadding: 4,
+					labelPadding: 10,
+					labelHheight: 10,
+					// fontName: 'Quicksand',
+					// width: 10,
+					colors: sankeyColors,
+					label: {
+						fontName: 'Quicksand',
+						fontSize: LABEL_FONT_SIZE,
+						// color: 'green'
+					  },
+				}, 
+				link: {
+					colorMode: 'gradient',
+					colors: sankeyColors
+
+				}
+			} 
+		},
+		containerId: 'sankeyVis'
+	});
+	sankeyWrapper.draw();
 }
