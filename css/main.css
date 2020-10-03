@@ -91,9 +91,9 @@ hr {
 }
 
 .tooltip {
-  padding: 3%;
-  border: none;
+  padding: 7%;
   color: #292829;
+  font-size: 17px;
 }
 
 #ganttVis {

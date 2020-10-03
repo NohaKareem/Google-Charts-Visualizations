@@ -104,9 +104,9 @@ hr {
 }
 
 .tooltip {
-    padding: 3%;
-    border: none;
+    padding: 7%;
     color: $CHARCOAL_BLACK;
+    font-size: 17px;
 }
 
 #ganttVis {
@@ -115,10 +115,13 @@ hr {
 
 // styling gantt chart https://matthewelsom.com/blog/styling-google-gantt-chart-with-css.html
 g:nth-child(10) {
+    // tooltip rectangle
     rect {
       stroke: white;
       width: 35% !important;
     }
+
+    // tooltip text
     text {
         margin-right: 25px !important;
         font-family: 'Quicksand' !important;
